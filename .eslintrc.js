@@ -105,6 +105,12 @@ module.exports = {
   ],
   plugins: ["react", "react-native", "import"],
   settings: {
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
     react: {
       version: "detect",
     },
