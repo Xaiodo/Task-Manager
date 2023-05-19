@@ -1,29 +1,3 @@
-import { useRef } from "react";
-import { View, Text } from "react-native";
-
-import BottomSheet from "@gorhom/bottom-sheet";
-
-const AddGroup = () => {
-  const sheetRef = useRef(null);
-  const [isOpened, setIsOpened] = useState(true);
-  const snapPoints = ["40%"];
-
-  return (
-    <View>
-      <BottomSheet
-        enablePanDownToClose={true}
-        ref={sheetRef}
-        snapPoints={snapPoints}
-      >
-        <Text>Hello </Text>
-      </BottomSheet>
-    </View>
-  );
-};
-
-export default AddGroup;
-
-/*
 import { View, StyleSheet, Modal, Text, TouchableOpacity } from "react-native";
 
 const AddGroupModal = ({ visible, onClose }) => {
@@ -98,4 +72,3 @@ const styles = StyleSheet.create({
 });
 
 export default AddGroupModal;
-*/

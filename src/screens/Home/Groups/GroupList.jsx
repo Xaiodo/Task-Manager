@@ -39,13 +39,17 @@ const GroupList = ({ navigation }) => {
     />
   );
 
+  const handleAddGroup = () => {
+    navigation.navigate("AddGroup");
+  };
+
   return (
     <View style={{ height: "100%" }}>
       <View style={{ padding: 20 }}>
         <GroupInput
-          icon={"search"}
+          icon="search"
           onIconPress={onSearchHandle}
-          placeholder={"Seach your group"}
+          placeholder="Search your group"
           setValue={setSearchGroup}
           value={searchGroup}
         />
@@ -56,7 +60,7 @@ const GroupList = ({ navigation }) => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderItem}
       />
-      <AddGroupButton onPress={navigation.navigate("AddGroup")} />
+      <AddGroupButton onPress={handleAddGroup} />
     </View>
   );
 };
