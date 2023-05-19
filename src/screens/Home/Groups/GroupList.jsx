@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { StyleSheet, FlatList, View } from "react-native";
 
+import AddGroup from "../AddGroup/AddModalGroup";
+
 import AddGroupButton from "./AddGroupButton";
 import GroupInput from "./GroupInput";
 import GroupItem from "./GroupItem";
@@ -24,12 +26,20 @@ const data = [
     groupName: "Yak tak mozh",
     participantCount: 2,
   },
+  {
+    imageSource:
+      "https://cdn.discordapp.com/attachments/1046399512526205038/1106615898871185428/Lucy.png",
+    groupName: "Yak tak mozh",
+    participantCount: 2,
+  },
 ];
 
-const GroupList = ({ navigation }) => {
+const GroupList = () => {
   const [searchGroup, setSearchGroup] = useState("");
 
   const onSearchHandle = () => {};
+
+  const [visible, setModalVisible] = useState(false);
 
   const renderItem = ({ item }) => (
     <GroupItem
@@ -39,8 +49,12 @@ const GroupList = ({ navigation }) => {
     />
   );
 
-  const handleAddGroup = () => {
-    navigation.navigate("AddGroup");
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
   return (
@@ -60,7 +74,8 @@ const GroupList = ({ navigation }) => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderItem}
       />
-      <AddGroupButton onPress={handleAddGroup} />
+      <AddGroup closeModal={closeModal} modalVisible={visible} />
+      <AddGroupButton onPress={openModal} />
     </View>
   );
 };

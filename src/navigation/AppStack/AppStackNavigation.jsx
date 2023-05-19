@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 
-import AddGroup from "../../screens/Home/AddGroup/AddGroup";
+import AddGroup from "../../screens/Home/AddGroup/AddModalGroup";
 import GroupList from "../../screens/Home/Groups/GroupList";
 
 const Stack = createStackNavigator();

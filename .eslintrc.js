@@ -30,7 +30,7 @@ const ESLINT_RULES = {
   "no-console": ERROR,
   "newline-after-var": ERROR,
   "object-shorthand": ERROR,
-  "no-magic-numbers": [ERROR, { ignoreArrayIndexes: true, ignore: [1, 0, -1] }],
+  "no-magic-numbers": [OFF],
 };
 
 const IMPORT_RULES = {
