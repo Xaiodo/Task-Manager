@@ -70,8 +70,11 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   taskList: {
-    alignItems: "center",
     flexDirection: "column",
+    height: "100%",
+    marginTop: 20,
+    padding: 14,
+    width: "100%",
   },
 });
 

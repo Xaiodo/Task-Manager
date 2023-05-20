@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 import Collapsible from "react-native-collapsible";
 
-const Task = (task) => {
+const Task = ({ item }) => {
   const [collapsed, setCollapsed] = React.useState(true);
 
   const onCollapsedPressed = () => {
@@ -13,15 +13,20 @@ const Task = (task) => {
   return (
     <TouchableOpacity onPress={onCollapsedPressed} style={styles.body}>
       <View style={styles.item}>
-        <Text style={styles.text}>{task.title}</Text>
+        <Text style={styles.text}>{item.title}</Text>
       </View>
       <Collapsible collapsed={collapsed} style={styles.collapsed}>
-        <Text style={styles.description}>{task.description}</Text>
+        <Text style={styles.description}>{item.description}</Text>
         <View style={styles.details}>
           <Text style={styles.description}>Assigned to: </Text>
           <View>
-            <Image source={{ uri: task.userImage }} style={styles.image} />
-            <Text style={styles.description}>{task.username}</Text>
+            <Image
+              source={{
+                uri: "https://cdn.discordapp.com/attachments/1046399512526205038/1106615938188583022/Rin.jpg",
+              }}
+              style={styles.image}
+            />
+            <Text style={styles.description}>{"Xaiodo"}</Text>
           </View>
         </View>
       </Collapsible>
@@ -32,9 +37,8 @@ const Task = (task) => {
 const styles = StyleSheet.create({
   body: {
     backgroundColor: "white",
-    borderColor: "grey",
     borderRadius: 5,
-    borderWidth: 1,
+    elevation: 6,
     marginBottom: 10,
     paddingLeft: 15,
     paddingRight: 15,
@@ -42,8 +46,6 @@ const styles = StyleSheet.create({
   },
   collapsed: {
     flexDirection: "column",
-    justifyContent: "flex-start",
-    width: "100%",
   },
   description: {
     alignSelf: "center",
@@ -53,7 +55,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 10,
-    width: "100%",
   },
   image: {
     borderRadius: 100,
@@ -66,7 +67,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   text: {
-    backgroundColor: "transparent",
     fontSize: 20,
     fontWeight: "bold",
   },
