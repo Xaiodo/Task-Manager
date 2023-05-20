@@ -11,6 +11,7 @@ export const api = {
     login: baseUrl + "/users/login",
     register: baseUrl + "/users/register",
     findUser: baseUrl + "/users",
+    findUserById: baseUrl + "/users/byId",
   },
   groups: {
     base: baseUrl + "/groups",

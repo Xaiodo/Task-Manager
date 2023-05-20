@@ -6,7 +6,7 @@ import GroupInput from "../ListGroups/GroupInput";
 
 import HeaderButtonBack from "./HeaderButtonBack";
 import HeaderIconButton from "./HeaderIconButton";
-import Task from "./Task";
+import Task from "./Task/Task";
 
 const GroupDetails = ({ navigation, route }) => {
   const [tasks, setTasks] = useState([]);
@@ -32,7 +32,9 @@ const GroupDetails = ({ navigation, route }) => {
     });
   }, [setFilteredTasks, setSearchTask]);
 
-  const handleOnAddPress = () => {};
+  const handleOnAddPress = () => {
+    navigation.navigate("AddTask", { groupId });
+  };
 
   const handleOnBackPress = () => {
     navigation.goBack();
@@ -47,6 +49,7 @@ const GroupDetails = ({ navigation, route }) => {
         setValue={setSearchTask}
         value={searchTask}
       />
+      <View style={{ height: 20 }} />
       {tasks.length === 0 ? (
         <View style={{ alignItems: "center" }}>
           <Text>No tasks</Text>
@@ -71,8 +74,7 @@ const styles = StyleSheet.create({
   },
   taskList: {
     flexDirection: "column",
-    height: "100%",
-    marginTop: 20,
+    marginVertical: 20,
     padding: 14,
     width: "100%",
   },

@@ -66,10 +66,29 @@ const findUser = async (email) => {
   }
 };
 
+const getUserById = async (userId) => {
+  try {
+    const token = await jwtService.getToken();
+    const response = await ApiManager.get(
+      `${api.users.findUserById}/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+};
+
 const authService = {
   login,
   register,
   findUser,
+  findUserById: getUserById,
 };
 
 export default authService;

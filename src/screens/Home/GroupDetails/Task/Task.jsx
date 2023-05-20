@@ -1,17 +1,32 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 import Collapsible from "react-native-collapsible";
 
+import authService from "../../../../services/authService";
+
 const Task = ({ item }) => {
-  const [collapsed, setCollapsed] = React.useState(true);
+  const [collapsed, setCollapsed] = useState(true);
+  const [user, setUSer] = useState(null);
+
+  useEffect(() => {
+    authService.findUserById(item.assignmentTo).then((res) => {
+      setUSer(res);
+    });
+  }, []);
+
+  const handleOnAssignToMe = () => {};
 
   const onCollapsedPressed = () => {
     setCollapsed(!collapsed);
   };
 
   return (
-    <TouchableOpacity onPress={onCollapsedPressed} style={styles.body}>
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={onCollapsedPressed}
+      style={styles.body}
+    >
       <View style={styles.item}>
         <Text style={styles.text}>{item.title}</Text>
       </View>
@@ -20,13 +35,13 @@ const Task = ({ item }) => {
         <View style={styles.details}>
           <Text style={styles.description}>Assigned to: </Text>
           <View>
-            <Image
-              source={{
-                uri: "https://cdn.discordapp.com/attachments/1046399512526205038/1106615938188583022/Rin.jpg",
-              }}
-              style={styles.image}
-            />
-            <Text style={styles.description}>{"Xaiodo"}</Text>
+            {user && user.imageUrl ? (
+              <Image source={{ uri: user.imageUrl }} style={styles.image} />
+            ) : (
+              <Text onPress={handleOnAssignToMe} style={{ color: "blue" }}>
+                assign to me
+              </Text>
+            )}
           </View>
         </View>
       </Collapsible>
@@ -57,13 +72,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   image: {
-    borderRadius: 100,
+    borderRadius: 40,
+    height: 50,
     paddingTop: "100%",
-    width: "100%",
+    width: 50,
   },
   item: {
     alignItems: "center",
-    backgroundColor: "transparent",
     padding: 10,
   },
   text: {

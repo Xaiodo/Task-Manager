@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import CreateGroup from "../../screens/Home/AddGroup/CreateGroup";
 import FindGroup from "../../screens/Home/AddGroup/FindGroup";
 import GroupDetails from "../../screens/Home/GroupDetails/GroupDetails";
+import AddTask from "../../screens/Home/GroupDetails/Task/AddTask";
 import GroupList from "../../screens/Home/ListGroups/GroupList";
 
 const Stack = createStackNavigator();
@@ -32,6 +33,14 @@ const AppStackNavigation = () => {
           title: route.params.groupName,
           headerTitleAlign: "center",
         })}
+      />
+      <Stack.Screen
+        component={AddTask}
+        name="AddTask"
+        options={{
+          title: "Adding the task",
+          headerTitleAlign: "center",
+        }}
       />
     </Stack.Navigator>
   );

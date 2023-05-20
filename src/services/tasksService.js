@@ -2,6 +2,7 @@ import axios from "axios";
 
 import { api } from "../constants/backend";
 
+import authService from "./authService";
 import jwtService from "./jwt";
 
 const ApiManager = axios.create({
@@ -37,18 +38,21 @@ const getTasks = async (groupId) => {
   }
 };
 
-const createTask = async (groupId, name, description, imageUrl) => {
+const createTask = async (group, title, description) => {
   try {
+    const email = await jwtService.getUser();
+    const ownerId = await authService.findUser(email);
+
     const response = await ApiManager.post(`${api.tasks.base}`, {
-      groupId,
-      name,
+      group,
+      title,
       description,
-      imageUrl,
+      ownerId: ownerId._id,
     });
 
-    return response;
+    return response.data;
   } catch (error) {
-    return error.response;
+    return error.message;
   }
 };
 
