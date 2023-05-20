@@ -31,9 +31,10 @@ ApiManager.interceptors.request.use(
 const getGroups = async () => {
   try {
     const email = await jwtService.getUser();
-    const userId = await authService.findUser(email);
 
-    const response = await ApiManager.get(`${api.groups.base}/${userId._id}`);
+    const user = await authService.findUser(email);
+
+    const response = await ApiManager.get(`${api.groups.base}/${user._id}`);
 
     return response.data;
   } catch (error) {

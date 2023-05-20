@@ -49,7 +49,7 @@ const GroupList = () => {
         group.name.toLocaleLowerCase().includes(searchGroup.toLocaleLowerCase())
       )
     );
-  }, [searchGroup, groups]);
+  }, [searchGroup]);
 
   const onSearchHandle = (text) => {
     setSearchGroup(text);
