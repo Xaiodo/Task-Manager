@@ -10,7 +10,17 @@ import {
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 const MODAL_HEIGHT = SCREEN_HEIGHT * 0.3;
 
-const AddGroupModal = ({ modalVisible, closeModal }) => {
+const AddGroupModal = ({ modalVisible, closeModal, navigation }) => {
+  const handleCreateGroup = () => {
+    closeModal();
+    navigation.navigate("CreateGroup");
+  };
+
+  const handleFindGroup = () => {
+    closeModal();
+    navigation.navigate("FindGroup");
+  };
+
   return (
     <View style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
@@ -20,9 +30,13 @@ const AddGroupModal = ({ modalVisible, closeModal }) => {
               <View style={styles.closeButtonText} />
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
-              <Text style={styles.button}>Find group</Text>
+              <TouchableOpacity onPress={handleFindGroup}>
+                <Text style={styles.button}>Find group</Text>
+              </TouchableOpacity>
               <View style={{ paddingVertical: 10 }} />
-              <Text style={styles.button}>Create group</Text>
+              <TouchableOpacity onPress={handleCreateGroup}>
+                <Text style={styles.button}>Create group</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

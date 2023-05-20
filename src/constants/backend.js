@@ -15,4 +15,7 @@ export const api = {
   groups: {
     base: baseUrl + "/groups",
   },
+  tasks: {
+    base: baseUrl + "/tasks",
+  },
 };

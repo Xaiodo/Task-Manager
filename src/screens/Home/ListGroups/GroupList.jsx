@@ -8,34 +8,7 @@ import AddGroupButton from "./AddGroupButton";
 import GroupInput from "./GroupInput";
 import GroupItem from "./GroupItem";
 
-const data = [
-  {
-    imageSource:
-      "https://cdn.discordapp.com/attachments/1046399512526205038/1106615898871185428/Lucy.png",
-    groupName: "Yak tak mozh",
-    participantCount: 2,
-  },
-  {
-    imageSource:
-      "https://cdn.discordapp.com/attachments/1046399512526205038/1106615898871185428/Lucy.png",
-    groupName: "Test",
-    participantCount: 2,
-  },
-  {
-    imageSource:
-      "https://cdn.discordapp.com/attachments/1046399512526205038/1106615898871185428/Lucy.png",
-    groupName: "Soft Wars",
-    participantCount: 2,
-  },
-  {
-    imageSource:
-      "https://cdn.discordapp.com/attachments/1046399512526205038/1106615898871185428/Lucy.png",
-    groupName: "Ekreative",
-    participantCount: 2,
-  },
-];
-
-const GroupList = () => {
+const GroupList = ({ navigation }) => {
   const [searchGroup, setSearchGroup] = useState("");
   const [groups, setGroups] = useState([]);
   const [filteredGroups, setFilteredGroups] = useState([]);
@@ -61,6 +34,7 @@ const GroupList = () => {
     <GroupItem
       groupName={item.name}
       imageSource={item.imageUrl}
+      navigation={navigation}
       participantCount={item.users.length}
     />
   );
@@ -86,11 +60,15 @@ const GroupList = () => {
       </View>
       <FlatList
         contentContainerStyle={styles.container}
-        data={filteredGroups}
+        data={searchGroup.length > 0 ? filteredGroups : groups}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderItem}
       />
-      <AddGroup closeModal={closeModal} modalVisible={visible} />
+      <AddGroup
+        closeModal={closeModal}
+        modalVisible={visible}
+        navigation={navigation}
+      />
       <AddGroupButton onPress={openModal} />
     </View>
   );
@@ -100,8 +78,8 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     flexDirection: "column",
+    paddingBottom: 10,
     paddingHorizontal: 10,
-    paddingVertical: 8,
   },
 });
 

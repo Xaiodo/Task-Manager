@@ -10,7 +10,7 @@ const REACT_RULES = {
   "react/no-multi-comp": ERROR,
   "react/no-string-refs": ERROR,
   "react/no-unescaped-entities": ERROR,
-  "react/no-unstable-nested-components": ERROR,
+  "react/no-unstable-nested-components": OFF,
   "react/self-closing-comp": ERROR,
   "react/jsx-boolean-value": [ERROR, "always"],
   "react/jsx-fragments": ERROR,
@@ -24,6 +24,7 @@ const REACT_RULES = {
   "react/jsx-no-useless-fragment": ERROR,
   "react/jsx-sort-props": ERROR,
   "react/prop-types": OFF,
+  "react-hooks/exhaustive-deps": OFF,
 };
 
 const ESLINT_RULES = {

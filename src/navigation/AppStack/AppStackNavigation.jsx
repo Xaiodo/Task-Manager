@@ -1,9 +1,9 @@
 import { createStackNavigator } from "@react-navigation/stack";
 
-import AddGroup from "../../screens/Home/AddGroup/AddModalGroup";
 import CreateGroup from "../../screens/Home/AddGroup/CreateGroup";
 import FindGroup from "../../screens/Home/AddGroup/FindGroup";
-import GroupList from "../../screens/Home/Groups/GroupList";
+import GroupDetails from "../../screens/Home/GroupDetails/GroupDetails";
+import GroupList from "../../screens/Home/ListGroups/GroupList";
 
 const Stack = createStackNavigator();
 
@@ -11,13 +11,6 @@ const AppStackNavigation = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen component={GroupList} name="GroupList" />
-      <Stack.Screen
-        component={AddGroup}
-        name="AddGroup"
-        options={{
-          headerShown: false,
-        }}
-      />
       <Stack.Screen
         component={FindGroup}
         name="FindGroup"
@@ -31,6 +24,14 @@ const AppStackNavigation = () => {
         options={{
           title: "Create your group",
         }}
+      />
+      <Stack.Screen
+        component={GroupDetails}
+        name="GroupDetails"
+        options={({ route }) => ({
+          title: route.params.groupName,
+          headerTitleAlign: "center",
+        })}
       />
     </Stack.Navigator>
   );

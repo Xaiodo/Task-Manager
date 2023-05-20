@@ -42,20 +42,21 @@ const getGroups = async () => {
   }
 };
 
-const createGroup = async (name, description, imageUrl) => {
+const createGroup = async (name, secretWord, imageUrl) => {
   try {
-    const userId = await authService.getUser();
+    const email = await jwtService.getUser();
+    const userId = await authService.findUser(email);
 
-    const response = await ApiManager.post(`${api.groups.base}/${userId._id}`, {
+    const response = await ApiManager.post(`${api.groups.base}/`, {
       name,
-      description,
+      secretWord,
       imageUrl,
-      userId: userId._id,
+      ownerId: userId._id,
     });
 
-    // return response.data;
+    return response;
   } catch (error) {
-    return error.response.data.message;
+    return error.response;
   }
 };
 
@@ -85,16 +86,17 @@ const deleteGroup = async (groupId) => {
 
 const addMember = async (groupName, secretWord) => {
   try {
-    const userId = await jwtService.getUser();
+    const email = await jwtService.getUser();
+    const user = await authService.findUser(email);
 
-    const response = await ApiManager.post(`${api.groups.base}/${userId._id}`, {
-      groupName,
+    const response = await ApiManager.post(`${api.groups.base}/${user._id}`, {
+      name: groupName,
       secretWord,
     });
 
-    return response.data;
+    return response;
   } catch (error) {
-    return error.response.data.message;
+    return error.response;
   }
 };
 
