@@ -6,7 +6,10 @@ const GroupItem = ({ imageSource, groupName, participantCount }) => {
       <Image source={{ uri: imageSource }} style={styles.image} />
       <View style={styles.detailsContainer}>
         <Text style={styles.groupName}>{groupName}</Text>
-        <Text style={styles.participantCount}>{participantCount} members</Text>
+        <Text style={styles.participantCount}>
+          {participantCount}{" "}
+          {`${participantCount === 1 ? "member" : "members"}  `}
+        </Text>
       </View>
     </View>
   );

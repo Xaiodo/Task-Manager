@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { AuthContext } from "../../navigation/AppNavigation/AppNavigation";
 import authService from "../../services/authService";
 
 import CustomTextInput from "./CustomTextInput";
@@ -15,6 +16,8 @@ const Register = ({ navigation }) => {
   const [image, setImage] = useState(
     "https://cdn.discordapp.com/attachments/1046399512526205038/1106624150971371640/image.png"
   );
+  const { setIsLogged } = useContext(AuthContext);
+
   const [error, setError] = useState("");
 
   const handleRegister = () => {
@@ -22,25 +25,39 @@ const Register = ({ navigation }) => {
     if (password !== confirmPassword) {
       setError("Passwords do not match");
     }
-    if (username === "") {
-      setError("Username cannot be empty");
-    }
-    if (email === "") {
-      setError("Email cannot be empty");
-    }
-    if (password === "") {
-      setError("Password cannot be empty");
-    }
-    if (confirmPassword === "") {
-      setError("Confirm password cannot be empty");
-    }
-    authService.register(username, email, password, image).then((res) => {
-      if (res.error) {
-        setError(res.error);
-        return;
+    if (username.length < 3) {
+      setError("Username must be at least 3 characters long");
+      if (username === "") {
+        setError("Username cannot be empty");
       }
-      console.log("success");
-    });
+    }
+    if (email.length < 5) {
+      setError("Email must be at least 5 characters long");
+      if (email === "") {
+        setError("Email cannot be empty");
+      }
+    }
+    if (password.length < 4) {
+      setError("Password must be at least 4 characters long");
+      if (password === "") {
+        setError("Password cannot be empty");
+      }
+    }
+    if (image === "") {
+      setError("Image cannot be empty");
+    }
+    authService
+      .register(username, email, password, image)
+      .then((res) => {
+        if (res.error) {
+          setError(res.error);
+        } else {
+          setIsLogged(res.token.length > 0);
+        }
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
   };
 
   return (

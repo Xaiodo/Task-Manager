@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, FlatList, View } from "react-native";
 
+import groupService from "../../../services/groupService";
 import AddGroup from "../AddGroup/AddModalGroup";
 
 import AddGroupButton from "./AddGroupButton";
@@ -17,35 +18,50 @@ const data = [
   {
     imageSource:
       "https://cdn.discordapp.com/attachments/1046399512526205038/1106615898871185428/Lucy.png",
-    groupName: "Yak tak mozh",
+    groupName: "Test",
     participantCount: 2,
   },
   {
     imageSource:
       "https://cdn.discordapp.com/attachments/1046399512526205038/1106615898871185428/Lucy.png",
-    groupName: "Yak tak mozh",
+    groupName: "Soft Wars",
     participantCount: 2,
   },
   {
     imageSource:
       "https://cdn.discordapp.com/attachments/1046399512526205038/1106615898871185428/Lucy.png",
-    groupName: "Yak tak mozh",
+    groupName: "Ekreative",
     participantCount: 2,
   },
 ];
 
 const GroupList = () => {
   const [searchGroup, setSearchGroup] = useState("");
+  const [groups, setGroups] = useState([]);
+  const [filteredGroups, setFilteredGroups] = useState([]);
 
-  const onSearchHandle = () => {};
+  useEffect(() => {
+    groupService.getGroups().then((res) => {
+      setGroups(res);
+    });
+    setFilteredGroups(
+      groups.filter((group) =>
+        group.name.toLocaleLowerCase().includes(searchGroup.toLocaleLowerCase())
+      )
+    );
+  }, [searchGroup, groups]);
+
+  const onSearchHandle = (text) => {
+    setSearchGroup(text);
+  };
 
   const [visible, setModalVisible] = useState(false);
 
   const renderItem = ({ item }) => (
     <GroupItem
-      groupName={item.groupName}
-      imageSource={item.imageSource}
-      participantCount={item.participantCount}
+      groupName={item.name}
+      imageSource={item.imageUrl}
+      participantCount={item.users.length}
     />
   );
 
@@ -64,13 +80,13 @@ const GroupList = () => {
           icon="search"
           onIconPress={onSearchHandle}
           placeholder="Search your group"
-          setValue={setSearchGroup}
+          setValue={onSearchHandle}
           value={searchGroup}
         />
       </View>
       <FlatList
         contentContainerStyle={styles.container}
-        data={data}
+        data={filteredGroups}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderItem}
       />

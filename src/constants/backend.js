@@ -7,9 +7,12 @@ const baseUrl =
 
 export const api = {
   baseUrl,
-  register: baseUrl + "/register",
   users: {
     login: baseUrl + "/users/login",
     register: baseUrl + "/users/register",
+    findUser: baseUrl + "/users",
+  },
+  groups: {
+    base: baseUrl + "/groups",
   },
 };

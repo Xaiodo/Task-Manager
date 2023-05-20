@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { AuthContext } from "../../navigation/AppNavigation/AppNavigation";
 import authService from "../../services/authService";
-import jwtService from "../../services/jwt";
 
 import CustomTextInput from "./CustomTextInput";
 
@@ -12,8 +12,10 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const { setIsLogged } = useContext(AuthContext);
 
-  const handleRegister = async () => {
+  const handleLogin = () => {
+    setError("");
     if (email === "") {
       setError("Email cannot be empty");
       return;
@@ -22,15 +24,14 @@ const Login = ({ navigation }) => {
       setError("Password cannot be empty");
       return;
     }
-    setError("");
     authService
       .login(email, password)
       .then((res) => {
         if (res.error) {
           setError(res.error);
-          return;
+        } else {
+          setIsLogged(res.token.length > 0);
         }
-        console.log("success");
       })
       .catch((err) => {
         setError(err.message);
@@ -80,7 +81,7 @@ const Login = ({ navigation }) => {
           />
         </View>
         <TouchableOpacity
-          onPress={handleRegister}
+          onPress={handleLogin}
           style={{
             padding: 10,
             backgroundColor: "#1c37b3",

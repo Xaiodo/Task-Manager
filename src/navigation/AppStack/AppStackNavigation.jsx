@@ -1,6 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
 
 import AddGroup from "../../screens/Home/AddGroup/AddModalGroup";
+import CreateGroup from "../../screens/Home/AddGroup/CreateGroup";
+import FindGroup from "../../screens/Home/AddGroup/FindGroup";
 import GroupList from "../../screens/Home/Groups/GroupList";
 
 const Stack = createStackNavigator();
@@ -14,7 +16,20 @@ const AppStackNavigation = () => {
         name="AddGroup"
         options={{
           headerShown: false,
-          presentation: "modal",
+        }}
+      />
+      <Stack.Screen
+        component={FindGroup}
+        name="FindGroup"
+        options={{
+          title: "Find your group",
+        }}
+      />
+      <Stack.Screen
+        component={CreateGroup}
+        name="CreateGroup"
+        options={{
+          title: "Create your group",
         }}
       />
     </Stack.Navigator>
