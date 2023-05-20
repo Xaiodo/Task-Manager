@@ -2,9 +2,16 @@ import { TextInput, View, StyleSheet, TouchableOpacity } from "react-native";
 
 import { Feather } from "@expo/vector-icons";
 
-const GroupInput = ({ placeholder, value, setValue, icon, onIconPress }) => {
+const GroupInput = ({
+  placeholder,
+  value,
+  setValue,
+  icon,
+  onIconPress,
+  backgroundColor,
+}) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
       <TextInput
         onChangeText={setValue}
         placeholder={placeholder}

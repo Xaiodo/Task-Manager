@@ -33,6 +33,7 @@ const GroupList = ({ navigation }) => {
   const renderItem = ({ item }) => (
     <GroupItem
       groupName={item.name}
+      id={item._id}
       imageSource={item.imageUrl}
       navigation={navigation}
       participantCount={item.users.length}
@@ -51,6 +52,7 @@ const GroupList = ({ navigation }) => {
     <View style={{ height: "100%" }}>
       <View style={{ padding: 20 }}>
         <GroupInput
+          backgroundColor={"white"}
           icon="search"
           onIconPress={onSearchHandle}
           placeholder="Search your group"

@@ -7,12 +7,14 @@ const GroupItem = ({
   groupName,
   participantCount,
   navigation,
+  id,
 }) => {
   const handleOnPress = () => {
     navigation.navigate("GroupDetails", {
       groupName,
       imageSource,
       participantCount,
+      id,
     });
   };
 
