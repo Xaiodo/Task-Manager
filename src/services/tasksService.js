@@ -38,6 +38,18 @@ const getTasks = async (groupId) => {
   }
 };
 
+const assignTask = async (taskId, assignmentTo) => {
+  try {
+    const response = await ApiManager.put(`${api.tasks.base}/${taskId}`, {
+      assignmentTo,
+    });
+
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 const createTask = async (group, title, description) => {
   try {
     const email = await jwtService.getUser();
@@ -81,6 +93,7 @@ const deleteTask = async (taskId) => {
 };
 
 export default {
+  assignTask,
   getTasks,
   createTask,
   updateTask,

@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, FlatList, Text } from "react-native";
 
+import { HomeContext } from "../../../navigation/AppStack/AppStackNavigation";
 import tasksService from "../../../services/tasksService";
 import GroupInput from "../ListGroups/GroupInput";
 
@@ -9,7 +10,7 @@ import HeaderIconButton from "./HeaderIconButton";
 import Task from "./Task/Task";
 
 const GroupDetails = ({ navigation, route }) => {
-  const [tasks, setTasks] = useState([]);
+  const { tasks, setTasks } = useContext(HomeContext).tasks;
   const [searchTask, setSearchTask] = useState("");
   const [filteredTasks, setFilteredTasks] = useState([]);
   const groupId = route.params.id;
@@ -30,7 +31,7 @@ const GroupDetails = ({ navigation, route }) => {
       ),
       headerLeft: () => <HeaderButtonBack onPress={handleOnBackPress} />,
     });
-  }, [setFilteredTasks, setSearchTask]);
+  }, [searchTask]);
 
   const handleOnAddPress = () => {
     navigation.navigate("AddTask", { groupId });
@@ -58,7 +59,7 @@ const GroupDetails = ({ navigation, route }) => {
         <FlatList
           contentContainerStyle={styles.taskList}
           data={filteredTasks.length > 0 ? filteredTasks : tasks}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item) => item._id}
           renderItem={({ item }) => <Task item={item} />}
         />
       )}
@@ -70,11 +71,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
   },
   taskList: {
     flexDirection: "column",
-    marginVertical: 20,
     padding: 14,
     width: "100%",
   },

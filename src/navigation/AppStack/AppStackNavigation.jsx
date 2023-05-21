@@ -1,3 +1,5 @@
+import { createContext, useState } from "react";
+
 import { createStackNavigator } from "@react-navigation/stack";
 
 import CreateGroup from "../../screens/Home/AddGroup/CreateGroup";
@@ -8,41 +10,50 @@ import GroupList from "../../screens/Home/ListGroups/GroupList";
 
 const Stack = createStackNavigator();
 
+export const HomeContext = createContext();
+
 const AppStackNavigation = () => {
+  const [tasks, setTasks] = useState([]);
+  const [groups, setGroups] = useState([]);
+
   return (
-    <Stack.Navigator>
-      <Stack.Screen component={GroupList} name="GroupList" />
-      <Stack.Screen
-        component={FindGroup}
-        name="FindGroup"
-        options={{
-          title: "Find your group",
-        }}
-      />
-      <Stack.Screen
-        component={CreateGroup}
-        name="CreateGroup"
-        options={{
-          title: "Create your group",
-        }}
-      />
-      <Stack.Screen
-        component={GroupDetails}
-        name="GroupDetails"
-        options={({ route }) => ({
-          title: route.params.groupName,
-          headerTitleAlign: "center",
-        })}
-      />
-      <Stack.Screen
-        component={AddTask}
-        name="AddTask"
-        options={{
-          title: "Adding the task",
-          headerTitleAlign: "center",
-        }}
-      />
-    </Stack.Navigator>
+    <HomeContext.Provider
+      value={{ tasks: { tasks, setTasks }, groups: { groups, setGroups } }}
+    >
+      <Stack.Navigator>
+        <Stack.Screen component={GroupList} name="GroupList" />
+        <Stack.Screen
+          component={FindGroup}
+          name="FindGroup"
+          options={{
+            title: "Find your group",
+          }}
+        />
+        <Stack.Screen
+          component={CreateGroup}
+          name="CreateGroup"
+          options={{
+            title: "Create your group",
+          }}
+        />
+        <Stack.Screen
+          component={GroupDetails}
+          name="GroupDetails"
+          options={({ route }) => ({
+            title: route.params.groupName,
+            headerTitleAlign: "center",
+          })}
+        />
+        <Stack.Screen
+          component={AddTask}
+          name="AddTask"
+          options={{
+            title: "Adding the task",
+            headerTitleAlign: "center",
+          }}
+        />
+      </Stack.Navigator>
+    </HomeContext.Provider>
   );
 };
 

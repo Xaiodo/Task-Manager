@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 
+import { HomeContext } from "../../../../navigation/AppStack/AppStackNavigation";
 import tasksService from "../../../../services/tasksService";
 import GroupInput from "../../ListGroups/GroupInput";
 
 const AddTask = ({ route }) => {
+  const { tasks, setTasks } = useContext(HomeContext).tasks;
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
@@ -15,10 +17,11 @@ const AddTask = ({ route }) => {
       setError("Title are required!");
       return;
     }
-    tasksService.createTask(group, title, description).then(() => {
+    tasksService.createTask(group, title, description).then((res) => {
       setTitle("");
       setDescription("");
       setError("");
+      setTasks([...tasks, res]);
     });
   };
 

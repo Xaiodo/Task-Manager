@@ -88,7 +88,7 @@ const authService = {
   login,
   register,
   findUser,
-  findUserById: getUserById,
+  getUserById,
 };
 
 export default authService;

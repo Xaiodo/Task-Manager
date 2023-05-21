@@ -1,21 +1,37 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 import Collapsible from "react-native-collapsible";
 
+import { HomeContext } from "../../../../navigation/AppStack/AppStackNavigation";
 import authService from "../../../../services/authService";
+import jwtService from "../../../../services/jwt";
+import tasksService from "../../../../services/tasksService";
 
 const Task = ({ item }) => {
   const [collapsed, setCollapsed] = useState(true);
+  const { tasks, setTasks } = useContext(HomeContext).tasks;
+
   const [user, setUSer] = useState(null);
 
   useEffect(() => {
-    authService.findUserById(item.assignmentTo).then((res) => {
+    authService.getUserById(item.assignmentTo).then((res) => {
       setUSer(res);
     });
-  }, []);
+  }, [tasks]);
 
-  const handleOnAssignToMe = () => {};
+  const handleOnAssignToMe = async () => {
+    try {
+      const res = await jwtService.getUser();
+      const user = await authService.findUser(res);
+
+      await tasksService.assignTask(item._id, user._id);
+
+      const newTask = await tasksService.getTasks(item.group);
+
+      setTasks(newTask.data);
+    } catch (error) {}
+  };
 
   const onCollapsedPressed = () => {
     setCollapsed(!collapsed);
@@ -36,11 +52,14 @@ const Task = ({ item }) => {
           <Text style={styles.description}>Assigned to: </Text>
           <View>
             {user && user.imageUrl ? (
-              <Image source={{ uri: user.imageUrl }} style={styles.image} />
+              <>
+                <Image source={{ uri: user.imageUrl }} style={styles.image} />
+                <Text style={{ alignSelf: "center" }}>{user.username}</Text>
+              </>
             ) : (
-              <Text onPress={handleOnAssignToMe} style={{ color: "blue" }}>
-                assign to me
-              </Text>
+              <TouchableOpacity onPress={handleOnAssignToMe}>
+                <Text style={{ color: "blue" }}>assign to me</Text>
+              </TouchableOpacity>
             )}
           </View>
         </View>
