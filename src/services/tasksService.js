@@ -68,12 +68,11 @@ const createTask = async (group, title, description) => {
   }
 };
 
-const updateTask = async (taskId, name, description, imageUrl) => {
+const updateTask = async (taskId, title, description) => {
   try {
     const response = await ApiManager.put(`${api.tasks.base}/${taskId}`, {
-      name,
+      title,
       description,
-      imageUrl,
     });
 
     return response;

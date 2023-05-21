@@ -60,7 +60,10 @@ const GroupDetails = ({ navigation, route }) => {
           contentContainerStyle={styles.taskList}
           data={filteredTasks.length > 0 ? filteredTasks : tasks}
           keyExtractor={(item) => item._id}
-          renderItem={({ item }) => <Task item={item} />}
+          renderItem={({ item }) => (
+            <Task item={item} navigation={navigation} />
+          )}
+          showsVerticalScrollIndicator={false}
         />
       )}
     </View>

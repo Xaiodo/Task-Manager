@@ -6,6 +6,7 @@ import CreateGroup from "../../screens/Home/AddGroup/CreateGroup";
 import FindGroup from "../../screens/Home/AddGroup/FindGroup";
 import GroupDetails from "../../screens/Home/GroupDetails/GroupDetails";
 import AddTask from "../../screens/Home/GroupDetails/Task/AddTask";
+import EditTask from "../../screens/Home/GroupDetails/Task/EditTask";
 import GroupList from "../../screens/Home/ListGroups/GroupList";
 
 const Stack = createStackNavigator();
@@ -49,6 +50,14 @@ const AppStackNavigation = () => {
           name="AddTask"
           options={{
             title: "Adding the task",
+            headerTitleAlign: "center",
+          }}
+        />
+        <Stack.Screen
+          component={EditTask}
+          name="EditTask"
+          options={{
+            tittle: "Editing the task",
             headerTitleAlign: "center",
           }}
         />
