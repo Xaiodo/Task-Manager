@@ -2,16 +2,17 @@ import { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, FlatList, Text } from "react-native";
 
 import { HomeContext } from "../../../navigation/AppStack/AppStackNavigation";
+import HeaderButtonBack from "../../../screens/Home/GroupDetails/HeaderButtonBack";
+import HeaderIconButton from "../../../screens/Home/GroupDetails/HeaderIconButton";
 import tasksService from "../../../services/tasksService";
-import GroupInput from "../ListGroups/GroupInput";
 
-import HeaderButtonBack from "./HeaderButtonBack";
-import HeaderIconButton from "./HeaderIconButton";
+import FilterButtons from "./FilterButtons";
 import Task from "./Task/Task";
 
 const GroupDetails = ({ navigation, route }) => {
   const { tasks, setTasks } = useContext(HomeContext).tasks;
-  const [searchTask, setSearchTask] = useState("");
+  const [filter, setFilter] = useState("All");
+
   const [filteredTasks, setFilteredTasks] = useState([]);
   const groupId = route.params.id;
 
@@ -19,11 +20,6 @@ const GroupDetails = ({ navigation, route }) => {
     tasksService.getTasks(groupId).then((res) => {
       setTasks(res.data);
     });
-    setFilteredTasks(
-      tasks.filter((task) =>
-        task.title.toLocaleLowerCase().includes(searchTask.toLocaleLowerCase())
-      )
-    );
 
     navigation.setOptions({
       headerRight: () => (
@@ -31,7 +27,25 @@ const GroupDetails = ({ navigation, route }) => {
       ),
       headerLeft: () => <HeaderButtonBack onPress={handleOnBackPress} />,
     });
-  }, [searchTask]);
+  }, []);
+
+  useEffect(() => {
+    const filtered = tasks.filter((task) => {
+      if (filter === "All") {
+        return true;
+      } else if (filter === "Pending") {
+        return !task.isDone;
+      } else if (filter === "Completed") {
+        return task.isDone;
+      }
+    });
+
+    setFilteredTasks(filtered);
+  }, [tasks, filter]);
+
+  const handleFilter = (filterType) => {
+    setFilter(filterType);
+  };
 
   const handleOnAddPress = () => {
     navigation.navigate("AddTask", { groupId });
@@ -43,13 +57,8 @@ const GroupDetails = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <GroupInput
-        backgroundColor={"#F2F2F2"}
-        icon="search"
-        placeholder="Find task"
-        setValue={setSearchTask}
-        value={searchTask}
-      />
+      <FilterButtons filter={filter} handleFilter={handleFilter} />
+
       <View style={{ height: 20 }} />
       {tasks.length === 0 ? (
         <View style={{ alignItems: "center" }}>
@@ -58,7 +67,7 @@ const GroupDetails = ({ navigation, route }) => {
       ) : (
         <FlatList
           contentContainerStyle={styles.taskList}
-          data={filteredTasks.length > 0 ? filteredTasks : tasks}
+          data={filteredTasks}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
             <Task item={item} navigation={navigation} />

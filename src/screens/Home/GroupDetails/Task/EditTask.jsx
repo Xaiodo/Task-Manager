@@ -19,6 +19,7 @@ const EditTask = ({ route, navigation }) => {
   const handleOnUpdatePress = async () => {
     if (newTitle === "") {
       setError("Title are required!");
+      setNewTitle("");
       return;
     }
     try {
@@ -38,6 +39,9 @@ const EditTask = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.error}>{error}</Text>
+      <View style={{ height: 20 }} />
+
       <Text style={styles.text}>Set new task</Text>
       <GroupInput
         backgroundColor={"#F2F2F2"}
@@ -64,6 +68,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flex: 1,
     padding: 20,
+  },
+  error: {
+    color: "red",
   },
   text: {
     marginVertical: 10,
