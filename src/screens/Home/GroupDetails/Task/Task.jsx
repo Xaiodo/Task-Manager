@@ -18,7 +18,7 @@ import tasksService from "../../../../services/tasksService";
 
 const Task = ({ item, navigation }) => {
   const [collapsed, setCollapsed] = useState(true);
-  const { tasks, setTasks } = useContext(HomeContext).tasks;
+  const { setTasks } = useContext(HomeContext).tasks;
   const [currentUser, setCurrentUser] = useState(null);
 
   const [user, setUSer] = useState(null);
@@ -27,7 +27,7 @@ const Task = ({ item, navigation }) => {
     authService.getUserById(item.assignmentTo).then((res) => {
       setUSer(res);
     });
-  }, [tasks]);
+  }, [item]);
 
   useEffect(() => {
     getCurrentUser().then((res) => {
@@ -127,12 +127,13 @@ const Task = ({ item, navigation }) => {
         <Text style={styles.description}>{item.description}</Text>
         <View style={styles.details}>
           <Text style={styles.detailsItem}>Assigned to: </Text>
+          <Text style={styles.detailsItem}>{item.imageUrl} </Text>
           <View>
             {user && user.imageUrl ? (
-              <>
+              <TouchableOpacity>
                 <Image source={{ uri: user.imageUrl }} style={styles.image} />
                 <Text style={{ alignSelf: "center" }}>{user.username}</Text>
-              </>
+              </TouchableOpacity>
             ) : (
               <TouchableOpacity onPress={handleOnAssignToMe}>
                 <Text style={{ color: "blue" }}>assign to me</Text>

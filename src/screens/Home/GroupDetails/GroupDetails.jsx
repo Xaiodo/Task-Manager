@@ -23,7 +23,7 @@ const GroupDetails = ({ navigation, route }) => {
 
     navigation.setOptions({
       headerRight: () => (
-        <HeaderIconButton iconName={"add"} onPress={handleOnAddPress} />
+        <HeaderIconButton iconName="add" onPress={handleOnAddPress} />
       ),
       headerLeft: () => <HeaderButtonBack onPress={handleOnBackPress} />,
     });
@@ -41,7 +41,7 @@ const GroupDetails = ({ navigation, route }) => {
     });
 
     setFilteredTasks(filtered);
-  }, [tasks, filter]);
+  }, [filter, tasks]);
 
   const handleFilter = (filterType) => {
     setFilter(filterType);
@@ -60,20 +60,22 @@ const GroupDetails = ({ navigation, route }) => {
       <FilterButtons filter={filter} handleFilter={handleFilter} />
 
       <View style={{ height: 20 }} />
-      {tasks.length === 0 ? (
+      {filteredTasks.length === 0 ? (
         <View style={{ alignItems: "center" }}>
           <Text>No tasks</Text>
         </View>
       ) : (
-        <FlatList
-          contentContainerStyle={styles.taskList}
-          data={filteredTasks}
-          keyExtractor={(item) => item._id}
-          renderItem={({ item }) => (
-            <Task item={item} navigation={navigation} />
-          )}
-          showsVerticalScrollIndicator={false}
-        />
+        <View>
+          <FlatList
+            contentContainerStyle={styles.taskList}
+            data={filteredTasks}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => (
+              <Task item={item} navigation={navigation} />
+            )}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
       )}
     </View>
   );
