@@ -2,10 +2,11 @@ import {
   Dimensions,
   Modal,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
+
+import CustomButton from "../../../components/CustomButton";
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 const MODAL_HEIGHT = SCREEN_HEIGHT * 0.3;
@@ -30,13 +31,19 @@ const AddGroupModal = ({ modalVisible, closeModal, navigation }) => {
               <View style={styles.closeButtonText} />
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={handleFindGroup}>
-                <Text style={styles.button}>Find group</Text>
-              </TouchableOpacity>
+              <CustomButton
+                backgroundColor={"#cd266e"}
+                onPress={handleFindGroup}
+                textColor={"white"}
+                title={"Find group"}
+              />
               <View style={{ paddingVertical: 10 }} />
-              <TouchableOpacity onPress={handleCreateGroup}>
-                <Text style={styles.button}>Create group</Text>
-              </TouchableOpacity>
+              <CustomButton
+                backgroundColor={"#cd266e"}
+                onPress={handleCreateGroup}
+                textColor={"white"}
+                title={"Create group"}
+              />
             </View>
           </View>
         </View>
@@ -46,15 +53,8 @@ const AddGroupModal = ({ modalVisible, closeModal, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: "blue",
-    borderRadius: 6,
-    color: "white",
-    fontSize: 16,
-    padding: 10,
-  },
   buttonContainer: {
-    alignItems: "center",
+    alignItems: "stretch",
     flexDirection: "column",
     paddingHorizontal: 20,
     paddingTop: 30,
@@ -65,14 +65,13 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   closeButtonText: {
-    backgroundColor: "gray",
+    backgroundColor: "#b3aebe",
     borderRadius: 10,
     color: "blue",
     padding: 2,
     width: 40,
   },
   container: {
-    backgroundColor: "white",
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     bottom: 0,
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   modalContent: {
-    backgroundColor: "white",
+    backgroundColor: "#6a6b84",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     height: MODAL_HEIGHT,

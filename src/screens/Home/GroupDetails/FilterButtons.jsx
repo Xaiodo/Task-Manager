@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 const FilterButtons = ({ handleFilter, filter }) => {
   const buttonStyle = (buttonFilter) => ({
     ...styles.button,
-    backgroundColor: filter === buttonFilter ? "blue" : "gray",
+    backgroundColor: filter === buttonFilter ? "#cd266e" : "#6a6b84",
   });
 
   return (
@@ -36,16 +36,16 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginRight: 10,
     paddingHorizontal: 10,
-    paddingVertical: 4,
+    paddingVertical: 5,
   },
   buttonText: {
     color: "white",
+    fontWeight: "bold",
     textAlign: "center",
   },
   filterContainer: {
     flexDirection: "row",
     justifyContent: "flex-start",
-    paddingLeft: 20,
   },
 });
 

@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
+import CustomButton from "../../../../components/CustomButton";
 import { HomeContext } from "../../../../navigation/AppStack/AppStackNavigation";
 import tasksService from "../../../../services/tasksService";
 import GroupInput from "../../ListGroups/GroupInput";
@@ -39,25 +40,34 @@ const EditTask = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.error}>{error}</Text>
+      <Text style={styles.text}>
+        Please update the required fields below to edit your task
+      </Text>
       <View style={{ height: 20 }} />
+      <Text style={styles.error}>{error}</Text>
+      <View style={{ height: 10 }} />
 
-      <Text style={styles.text}>Set new task</Text>
       <GroupInput
-        backgroundColor={"#F2F2F2"}
+        backgroundColor={"#e6e8f0"}
+        placeholder={"Enter the title of your`s task"}
         setValue={setNewTitle}
         value={newTitle}
       />
       <View style={{ height: 20 }} />
-      <Text style={styles.text}>Set new description about your new task</Text>
 
       <GroupInput
-        backgroundColor={"#F2F2F2"}
+        backgroundColor={"#e6e8f0"}
+        placeholder={"Enter the description of your`s task"}
         setValue={setNewDescription}
         value={newDescription}
       />
       <View style={{ height: 20 }} />
-      <Button onPress={handleOnUpdatePress} title="Update" />
+      <CustomButton
+        backgroundColor={"#cd266e"}
+        onPress={handleOnUpdatePress}
+        textColor={"white"}
+        title="Update"
+      />
     </View>
   );
 };
@@ -65,15 +75,17 @@ const EditTask = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     alignContent: "center",
-    backgroundColor: "white",
+    backgroundColor: "#363a55",
     flex: 1,
     padding: 20,
   },
   error: {
-    color: "red",
+    color: "#ff595f",
   },
   text: {
-    marginVertical: 10,
+    color: "white",
+    fontSize: 18,
+    textAlign: "center",
   },
 });
 

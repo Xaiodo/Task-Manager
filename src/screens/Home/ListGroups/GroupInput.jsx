@@ -9,12 +9,15 @@ const GroupInput = ({
   icon,
   onIconPress,
   backgroundColor,
+  isSecure,
 }) => {
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <TextInput
+        isSecure={isSecure}
         onChangeText={setValue}
         placeholder={placeholder}
+        placeholderTextColor="#727687"
         style={styles.input}
         value={value}
       />

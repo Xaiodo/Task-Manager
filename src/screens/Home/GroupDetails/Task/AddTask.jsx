@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
+import CustomButton from "../../../../components/CustomButton";
 import { HomeContext } from "../../../../navigation/AppStack/AppStackNavigation";
 import tasksService from "../../../../services/tasksService";
 import GroupInput from "../../ListGroups/GroupInput";
@@ -26,46 +27,46 @@ const AddTask = ({ route }) => {
   };
 
   return (
-    <View style={styles.body}>
-      <View style={styles.container}>
-        <Text style={{ fontSize: 18, textAlign: "center" }}>
-          Please fill in all the required fields below and create your own task!
-        </Text>
+    <View style={styles.container}>
+      <Text style={{ fontSize: 18, textAlign: "center", color: "white" }}>
+        Please fill in all the required fields below and create your own task
+      </Text>
 
-        <View style={{ height: 40 }} />
-        <Text style={{ fontSize: 18, textAlign: "left", color: "red" }}>
-          {error}
-        </Text>
-        <View style={{ height: 20 }} />
-        <GroupInput
-          backgroundColor={"#F1F1F1"}
-          placeholder={"Enter the title of your`s task"}
-          setValue={setTitle}
-          value={title}
-        />
-        <View style={{ height: 20 }} />
+      <Text style={{ fontSize: 18, textAlign: "left", color: "red" }}>
+        {error}
+      </Text>
+      <View style={{ height: 20 }} />
+      <GroupInput
+        backgroundColor={"#e6e8f0"}
+        placeholder={"Enter the title of your`s task"}
+        setValue={setTitle}
+        value={title}
+      />
+      <View style={{ height: 20 }} />
 
-        <GroupInput
-          backgroundColor={"#F1F1F1"}
-          placeholder={"Enter the description of your`s task"}
-          setValue={setDescription}
-          value={description}
-        />
-        <View style={{ height: 20 }} />
+      <GroupInput
+        backgroundColor={"#e6e8f0"}
+        placeholder={"Enter the description of your`s task"}
+        setValue={setDescription}
+        value={description}
+      />
+      <View style={{ height: 20 }} />
 
-        <Button onPress={handleOnPress} title="Create" />
-      </View>
+      <CustomButton
+        backgroundColor={"#cd266e"}
+        onPress={handleOnPress}
+        textColor={"white"}
+        title="Create"
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  body: {
-    backgroundColor: "white",
-    flex: 1,
-  },
   container: {
-    alignItems: "center",
+    alignItems: "stretch",
+    backgroundColor: "#363a55",
+    flex: 1,
     padding: 20,
   },
 });

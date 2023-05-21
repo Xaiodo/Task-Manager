@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   groupName: {
+    color: "white",
     fontSize: 18,
     fontWeight: "bold",
   },
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     width: 60,
   },
   innerContainer: {
-    backgroundColor: "white",
+    backgroundColor: "#4c506a",
     flexDirection: "row",
     marginTop: 10,
     paddingHorizontal: 10,
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   participantCount: {
-    color: "gray",
+    color: "lightgray",
   },
 });
 

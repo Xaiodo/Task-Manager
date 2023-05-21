@@ -49,10 +49,10 @@ const GroupList = ({ navigation }) => {
   };
 
   return (
-    <View style={{ height: "100%" }}>
-      <View style={{ padding: 20 }}>
+    <View style={{ height: "100%", backgroundColor: "#363a55" }}>
+      <View style={{ padding: 20, backgroundColor: "#363a55" }}>
         <GroupInput
-          backgroundColor={"white"}
+          backgroundColor={"#b3aebe"}
           icon="search"
           onIconPress={onSearchHandle}
           placeholder="Search your group"

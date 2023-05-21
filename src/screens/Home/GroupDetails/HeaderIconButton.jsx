@@ -6,7 +6,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 const HeaderIconButton = ({ iconName, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.button}>
-      <Ionicons color="black" name={iconName} size={24} />
+      <Ionicons color="white" name={iconName} size={24} />
     </TouchableOpacity>
   );
 };

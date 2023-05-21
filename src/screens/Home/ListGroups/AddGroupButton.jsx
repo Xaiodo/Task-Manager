@@ -14,7 +14,7 @@ const BottomLeftButton = ({ onPress }) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "blue",
+    backgroundColor: "#cd266e",
     borderRadius: 30,
     padding: 10,
   },

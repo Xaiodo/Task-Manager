@@ -1,16 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Button,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import Collapsible from "react-native-collapsible";
 
+import CustomButton from "../../../../components/CustomButton";
 import { HomeContext } from "../../../../navigation/AppStack/AppStackNavigation";
 import authService from "../../../../services/authService";
 import jwtService from "../../../../services/jwt";
@@ -74,11 +68,17 @@ const Task = ({ item, navigation }) => {
     }
   };
 
+  const isComplete = item.isDone ? "Complete" : "Pending";
+
   const handleOnAssignToMe = async () => {
     try {
       const user = await getCurrentUser();
 
-      await tasksService.assignTask(item._id, user._id);
+      if (item.assignmentTo !== null) {
+        await tasksService.assignTask(item._id, null);
+      } else {
+        await tasksService.assignTask(item._id, user._id);
+      }
 
       const newTasks = await tasksService.getTasks(item.group);
 
@@ -90,7 +90,12 @@ const Task = ({ item, navigation }) => {
 
   const handleOnComplete = async () => {
     try {
-      await tasksService.updateTask(item._id);
+      await tasksService.updateTask(
+        item._id,
+        item.title,
+        item.description,
+        !item.isDone
+      );
 
       const newTasks = await tasksService.getTasks(item.group);
 
@@ -115,7 +120,7 @@ const Task = ({ item, navigation }) => {
         {isCanDelete() ? (
           <TouchableOpacity onPress={handleOnEdit}>
             <MaterialIcons
-              color="gray"
+              color="#303030"
               name="edit"
               size={24}
               style={styles.delete}
@@ -130,7 +135,7 @@ const Task = ({ item, navigation }) => {
           <Text style={styles.detailsItem}>{item.imageUrl} </Text>
           <View>
             {user && user.imageUrl ? (
-              <TouchableOpacity>
+              <TouchableOpacity onPress={handleOnAssignToMe}>
                 <Image source={{ uri: user.imageUrl }} style={styles.image} />
                 <Text style={{ alignSelf: "center" }}>{user.username}</Text>
               </TouchableOpacity>
@@ -145,12 +150,21 @@ const Task = ({ item, navigation }) => {
         <View style={styles.detailsButtons}>
           {isCanDelete() && (
             <View>
-              <Button onPress={handleOnDelete} title="Delete" />
+              <CustomButton
+                backgroundColor={"#ff595f"}
+                onPress={handleOnDelete}
+                title="Delete"
+              />
             </View>
           )}
           {isAssignedToMe() && (
             <View style={styles.buttonContainer}>
-              <Button onPress={handleOnComplete} title="Complete" />
+              <CustomButton
+                backgroundColor={"#32d991"}
+                onPress={handleOnComplete}
+                style={styles.button}
+                title={isComplete}
+              />
             </View>
           )}
         </View>
@@ -161,7 +175,7 @@ const Task = ({ item, navigation }) => {
 
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: "white",
+    backgroundColor: "#e6e8f0",
     borderRadius: 5,
     elevation: 6,
     marginBottom: 10,
@@ -169,7 +183,6 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     padding: 10,
   },
-
   buttonContainer: {
     alignItems: "flex-end",
     flex: 1,

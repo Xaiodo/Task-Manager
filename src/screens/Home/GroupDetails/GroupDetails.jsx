@@ -83,7 +83,7 @@ const GroupDetails = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: "#363a55",
     flex: 1,
     paddingHorizontal: 20,
   },

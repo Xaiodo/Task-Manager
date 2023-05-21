@@ -21,8 +21,25 @@ const AppStackNavigation = () => {
     <HomeContext.Provider
       value={{ tasks: { tasks, setTasks }, groups: { groups, setGroups } }}
     >
-      <Stack.Navigator>
-        <Stack.Screen component={GroupList} name="GroupList" />
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "#363a55",
+            elevation: 0,
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      >
+        <Stack.Screen
+          component={GroupList}
+          name="GroupList"
+          options={{
+            title: "Your groups",
+          }}
+        />
         <Stack.Screen
           component={FindGroup}
           name="FindGroup"
