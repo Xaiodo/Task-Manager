@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 import CustomButton from "../../../components/CustomButton";
@@ -7,16 +7,27 @@ import GroupInput from "../ListGroups/GroupInput";
 
 import Snackbar from "./SnackBar";
 
-const FindGroup = () => {
+const CreateGroup = () => {
   const [groupName, setGroupName] = useState("");
   const [secretWord, setGroupCode] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarColor, setSnackbarColor] = useState("");
 
+  useEffect(() => {
+    if (snackbarMessage.length !== 0) {
+      const timer = setTimeout(() => {
+        setSnackbarMessage("");
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [snackbarMessage]);
+
   const onSearchHandle = () => {
-    if (groupName === "" || secretWord === "") {
-      alert("Please fill all fields");
+    if (groupName === "" || secretWord === "" || imageUrl === "") {
+      setSnackbarMessage("Please fill all fields");
+      setSnackbarColor("red");
       return;
     }
     groupService
@@ -113,4 +124,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FindGroup;
+export default CreateGroup;

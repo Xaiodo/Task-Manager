@@ -14,10 +14,10 @@ const GroupInput = ({
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <TextInput
-        isSecure={isSecure}
         onChangeText={setValue}
         placeholder={placeholder}
         placeholderTextColor="#727687"
+        secureTextEntry={isSecure}
         style={styles.input}
         value={value}
       />

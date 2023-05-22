@@ -30,7 +30,7 @@ ApiManager.interceptors.request.use(
 
 const getTasks = async (groupId) => {
   try {
-    const response = await ApiManager.get(`${api.tasks.base}?${groupId}`);
+    const response = await ApiManager.get(`${api.tasks.base}/${groupId}`);
 
     return response;
   } catch (error) {

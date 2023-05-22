@@ -4,13 +4,24 @@ import { View, Text, StyleSheet } from "react-native";
 import CustomButton from "../../../../components/CustomButton";
 import { HomeContext } from "../../../../navigation/AppStack/AppStackNavigation";
 import tasksService from "../../../../services/tasksService";
+import Snackbar from "../../AddGroup/SnackBar";
 import GroupInput from "../../ListGroups/GroupInput";
 
 const EditTask = ({ route, navigation }) => {
   const { setTasks } = useContext(HomeContext).tasks;
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
-  const [error, setError] = useState("");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  useEffect(() => {
+    if (snackbarMessage.length !== 0) {
+      const timer = setTimeout(() => {
+        setSnackbarMessage("");
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [snackbarMessage]);
 
   useEffect(() => {
     setNewTitle(route.params.task.title);
@@ -19,8 +30,7 @@ const EditTask = ({ route, navigation }) => {
 
   const handleOnUpdatePress = async () => {
     if (newTitle === "") {
-      setError("Title are required!");
-      setNewTitle("");
+      setSnackbarMessage("Title are required!");
       return;
     }
     try {
@@ -44,7 +54,7 @@ const EditTask = ({ route, navigation }) => {
         Please update the required fields below to edit your task
       </Text>
       <View style={{ height: 20 }} />
-      <Text style={styles.error}>{error}</Text>
+      <Text style={styles.error}>{snackbarMessage}</Text>
       <View style={{ height: 10 }} />
 
       <GroupInput
@@ -68,6 +78,9 @@ const EditTask = ({ route, navigation }) => {
         textColor={"white"}
         title="Update"
       />
+      {snackbarMessage.length !== 0 && (
+        <Snackbar color="red" message={snackbarMessage} />
+      )}
     </View>
   );
 };

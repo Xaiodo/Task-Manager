@@ -1,83 +1,106 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import CustomButton from "../../components/CustomButton";
 import { AuthContext } from "../../navigation/AppNavigation/AppNavigation";
 import authService from "../../services/authService";
-
-import CustomTextInput from "./CustomTextInput";
+import Snackbar from "../Home/AddGroup/SnackBar";
+import GroupInput from "../Home/ListGroups/GroupInput";
 
 const Register = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [image, setImage] = useState(
-    "https://cdn.discordapp.com/attachments/1046399512526205038/1106624150971371640/image.png"
-  );
+  const [image, setImage] = useState("");
   const { setIsLogged } = useContext(AuthContext);
 
-  const [error, setError] = useState("");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  useEffect(() => {
+    if (snackbarMessage.length !== 0) {
+      const timer = setTimeout(() => {
+        setSnackbarMessage("");
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [snackbarMessage]);
 
   const handleRegister = () => {
-    setError("");
+    setSnackbarMessage("");
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setSnackbarMessage("Passwords do not match");
+      return;
     }
     if (username.length < 3) {
-      setError("Username must be at least 3 characters long");
+      setSnackbarMessage("Username must be at least 3 characters long");
       if (username === "") {
-        setError("Username cannot be empty");
+        setSnackbarMessage("Username cannot be empty");
+        return;
       }
+      return;
     }
     if (email.length < 5) {
-      setError("Email must be at least 5 characters long");
+      setSnackbarMessage("Email must be at least 5 characters long");
       if (email === "") {
-        setError("Email cannot be empty");
+        setSnackbarMessage("Email cannot be empty");
+        return;
       }
+      return;
     }
     if (password.length < 4) {
-      setError("Password must be at least 4 characters long");
+      setSnackbarMessage("Password must be at least 4 characters long");
       if (password === "") {
-        setError("Password cannot be empty");
+        setSnackbarMessage("Password cannot be empty");
+        return;
       }
+      return;
     }
     if (image === "") {
-      setError("Image cannot be empty");
+      setSnackbarMessage("Image cannot be empty");
     }
     authService
       .register(username, email, password, image)
       .then((res) => {
         if (res.error) {
-          setError(res.error);
+          setSnackbarMessage(res.error);
         } else {
           setIsLogged(res.token.length > 0);
         }
       })
       .catch((err) => {
-        setError(err.message);
+        setSnackbarMessage(err.message);
       });
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#fefefe", flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: "#363a55", flex: 1 }}>
       <View
         style={{
           padding: 10,
         }}
       >
         <View style={{ alignItems: "center" }}>
-          <Text style={{ fontSize: 30, marginTop: 30, fontWeight: "bold" }}>
+          <Text
+            style={{
+              fontSize: 30,
+              marginTop: 30,
+              fontWeight: "bold",
+              color: "white",
+            }}
+          >
             Create account
           </Text>
           <Text
             style={{
               fontSize: 18,
               marginVertical: 20,
-              maxWidth: "60%",
               textAlign: "center",
               fontWeight: "600",
+              color: "white",
             }}
           >
             Create an account to continue using the app
@@ -85,66 +108,61 @@ const Register = ({ navigation }) => {
         </View>
         <View
           style={{
-            marginTop: 20,
             padding: 10,
           }}
         >
-          <Text style={{ color: "red", alignSelf: "flex-start" }}>{error}</Text>
-          <CustomTextInput
+          <GroupInput
+            backgroundColor={"#e6e8f0"}
             placeholder="Username"
             setValue={setUsername}
             value={username}
           />
-          <CustomTextInput
+          <View style={{ height: 20 }} />
+          <GroupInput
+            backgroundColor={"#e6e8f0"}
             placeholder="Email"
             setValue={setEmail}
             value={email}
           />
-          <CustomTextInput
+          <View style={{ height: 20 }} />
+          <GroupInput
+            backgroundColor={"#e6e8f0"}
             placeholder="Image url"
             setValue={setImage}
             value={image}
           />
-          <CustomTextInput
+          <View style={{ height: 20 }} />
+          <GroupInput
+            backgroundColor={"#e6e8f0"}
             isSecure={true}
             placeholder="Password"
             setValue={setPassword}
             value={password}
           />
-          <CustomTextInput
+          <View style={{ height: 20 }} />
+          <GroupInput
+            backgroundColor={"#e6e8f0"}
             isSecure={true}
             placeholder="Confirm password"
             setValue={setConfirmPassword}
             value={confirmPassword}
           />
+          <View style={{ height: 20 }} />
+
+          <CustomButton
+            backgroundColor={"#cd266e"}
+            onPress={handleRegister}
+            textColor={"white"}
+            title={"Sign up"}
+          />
         </View>
-        <TouchableOpacity
-          onPress={handleRegister}
-          style={{
-            padding: 10,
-            backgroundColor: "#1c37b3",
-            borderRadius: 8,
-            marginVertical: 40,
-            alignSelf: "center",
-            width: "90%",
-          }}
-        >
-          <Text
-            style={{
-              alignSelf: "center",
-              color: "white",
-              fontSize: 22,
-              fontWeight: "600",
-            }}
-          >
-            Sign up
-          </Text>
-        </TouchableOpacity>
+
         <TouchableOpacity onPress={() => navigation.navigate("Login")}>
           <Text
             style={{
               alignSelf: "center",
               fontSize: 16,
+              color: "white",
               fontWeight: "500",
             }}
           >
@@ -152,6 +170,9 @@ const Register = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
+      {snackbarMessage.length !== 0 && (
+        <Snackbar color="red" message={snackbarMessage} />
+      )}
     </SafeAreaView>
   );
 };

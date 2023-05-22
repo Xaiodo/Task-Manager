@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 import CustomButton from "../../../components/CustomButton";
@@ -13,9 +13,20 @@ const FindGroup = () => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarColor, setSnackbarColor] = useState("");
 
+  useEffect(() => {
+    if (snackbarMessage.length !== 0) {
+      const timer = setTimeout(() => {
+        setSnackbarMessage("");
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [snackbarMessage]);
+
   const onSearchHandle = () => {
     if (groupName === "" || secretWord === "") {
-      alert("Please fill all fields");
+      setSnackbarMessage("Please fill in all the fields");
+      setSnackbarColor("red");
       return;
     }
     groupService

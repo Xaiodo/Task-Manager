@@ -74,7 +74,7 @@ const AppStackNavigation = () => {
           component={EditTask}
           name="EditTask"
           options={{
-            tittle: "Editing the task",
+            title: "Editing the task",
             headerTitleAlign: "center",
           }}
         />
