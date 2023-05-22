@@ -1,8 +1,9 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import CustomButton from "../../../../components/CustomButton";
 import GroupInput from "../../../../components/CustomTextInput";
+import Snackbar from "../../../../components/SnackBar";
 import { HomeContext } from "../../../../navigation/AppStack/AppStackNavigation";
 import tasksService from "../../../../services/tasksService";
 
@@ -10,20 +11,39 @@ const AddTask = ({ route }) => {
   const { tasks, setTasks } = useContext(HomeContext).tasks;
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [error, setError] = useState("");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarColor, setSnackbarColor] = useState("");
   const group = route.params.groupId;
+
+  useEffect(() => {
+    if (snackbarMessage.length !== 0) {
+      const timer = setTimeout(() => {
+        setSnackbarMessage("");
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [snackbarMessage]);
 
   const handleOnPress = () => {
     if (title === "") {
-      setError("Title are required!");
+      setSnackbarMessage("Title are required!");
+      setSnackbarColor("red");
       return;
     }
-    tasksService.createTask(group, title, description).then((res) => {
-      setTitle("");
-      setDescription("");
-      setError("");
-      setTasks([...tasks, res]);
-    });
+    tasksService
+      .createTask(group, title, description)
+      .then((res) => {
+        setTitle("");
+        setDescription("");
+        setSnackbarColor("green");
+        setSnackbarMessage("Task created successfully!");
+        setTasks([...tasks, res]);
+      })
+      .catch((err) => {
+        setSnackbarMessage(err.response.data.message);
+        setSnackbarColor("red");
+      });
   };
 
   return (
@@ -32,9 +52,6 @@ const AddTask = ({ route }) => {
         Please fill in all the required fields below and create your own task
       </Text>
 
-      <Text style={{ fontSize: 18, textAlign: "left", color: "red" }}>
-        {error}
-      </Text>
       <View style={{ height: 20 }} />
       <GroupInput
         backgroundColor={"#e6e8f0"}
@@ -58,6 +75,9 @@ const AddTask = ({ route }) => {
         textColor={"white"}
         title="Create"
       />
+      {snackbarMessage.length !== 0 && (
+        <Snackbar color={snackbarColor} message={snackbarMessage} />
+      )}
     </View>
   );
 };
