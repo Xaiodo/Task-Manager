@@ -6,7 +6,7 @@ import {
   View,
 } from "react-native";
 
-import CustomButton from "../../../components/CustomButton";
+import CustomButton from "./CustomButton";
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 const MODAL_HEIGHT = SCREEN_HEIGHT * 0.3;

@@ -2,9 +2,9 @@ import { useContext, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import CustomButton from "../../../../components/CustomButton";
+import GroupInput from "../../../../components/CustomTextInput";
 import { HomeContext } from "../../../../navigation/AppStack/AppStackNavigation";
 import tasksService from "../../../../services/tasksService";
-import GroupInput from "../../ListGroups/GroupInput";
 
 const AddTask = ({ route }) => {
   const { tasks, setTasks } = useContext(HomeContext).tasks;

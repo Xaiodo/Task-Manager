@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 import CustomButton from "../../../components/CustomButton";
+import GroupInput from "../../../components/CustomTextInput";
+import Snackbar from "../../../components/SnackBar";
 import groupService from "../../../services/groupService";
-import GroupInput from "../ListGroups/GroupInput";
-
-import Snackbar from "./SnackBar";
 
 const CreateGroup = () => {
   const [groupName, setGroupName] = useState("");

@@ -1,7 +1,9 @@
 import { createContext, useState } from "react";
+import { TouchableOpacity } from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
 
+import HeaderIconButton from "../../components/HeaderIconButton";
 import CreateGroup from "../../screens/Home/AddGroup/CreateGroup";
 import FindGroup from "../../screens/Home/AddGroup/FindGroup";
 import GroupDetails from "../../screens/Home/GroupDetails/GroupDetails";
@@ -36,9 +38,18 @@ const AppStackNavigation = () => {
         <Stack.Screen
           component={GroupList}
           name="GroupList"
-          options={{
+          options={() => ({
             title: "Your groups",
-          }}
+            headerRight: () => (
+              <TouchableOpacity onPress={() => {}}>
+                <HeaderIconButton
+                  color="white"
+                  iconName="exit-outline"
+                  size={24}
+                />
+              </TouchableOpacity>
+            ),
+          })}
         />
         <Stack.Screen
           component={FindGroup}

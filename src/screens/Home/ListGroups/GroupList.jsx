@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, FlatList, View } from "react-native";
 
+import AddGroupButton from "../../../components/CustomPositionedButton";
+import GroupInput from "../../../components/CustomTextInput";
+import AddGroup from "../../../components/ModalBottomSheet";
 import groupService from "../../../services/groupService";
-import AddGroup from "../AddGroup/AddModalGroup";
 
-import AddGroupButton from "./AddGroupButton";
-import GroupInput from "./GroupInput";
 import GroupItem from "./GroupItem";
 
 const GroupList = ({ navigation }) => {

@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import CustomButton from "../../../../components/CustomButton";
+import GroupInput from "../../../../components/CustomTextInput";
+import Snackbar from "../../../../components/SnackBar";
 import { HomeContext } from "../../../../navigation/AppStack/AppStackNavigation";
 import tasksService from "../../../../services/tasksService";
-import Snackbar from "../../AddGroup/SnackBar";
-import GroupInput from "../../ListGroups/GroupInput";
 
 const EditTask = ({ route, navigation }) => {
   const { setTasks } = useContext(HomeContext).tasks;

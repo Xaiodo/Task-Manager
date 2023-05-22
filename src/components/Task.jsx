@@ -4,11 +4,12 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Collapsible from "react-native-collapsible";
 
-import CustomButton from "../../../../components/CustomButton";
-import { HomeContext } from "../../../../navigation/AppStack/AppStackNavigation";
-import authService from "../../../../services/authService";
-import jwtService from "../../../../services/jwt";
-import tasksService from "../../../../services/tasksService";
+import { HomeContext } from "../navigation/AppStack/AppStackNavigation";
+import authService from "../services/authService";
+import jwtService from "../services/jwt";
+import tasksService from "../services/tasksService";
+
+import CustomButton from "./CustomButton";
 
 const Task = ({ item, navigation }) => {
   const [collapsed, setCollapsed] = useState(true);

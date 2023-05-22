@@ -1,13 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, FlatList, Text } from "react-native";
 
+import FilterButtons from "../../../components/FilterButtons";
+import HeaderButtonBack from "../../../components/HeaderButtonBack";
+import HeaderIconButton from "../../../components/HeaderIconButton";
+import Task from "../../../components/Task";
 import { HomeContext } from "../../../navigation/AppStack/AppStackNavigation";
-import HeaderButtonBack from "../../../screens/Home/GroupDetails/HeaderButtonBack";
-import HeaderIconButton from "../../../screens/Home/GroupDetails/HeaderIconButton";
 import tasksService from "../../../services/tasksService";
-
-import FilterButtons from "./FilterButtons";
-import Task from "./Task/Task";
 
 const GroupDetails = ({ navigation, route }) => {
   const { tasks, setTasks } = useContext(HomeContext).tasks;

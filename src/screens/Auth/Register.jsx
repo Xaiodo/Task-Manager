@@ -4,10 +4,10 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import CustomButton from "../../components/CustomButton";
+import GroupInput from "../../components/CustomTextInput";
+import Snackbar from "../../components/SnackBar";
 import { AuthContext } from "../../navigation/AppNavigation/AppNavigation";
 import authService from "../../services/authService";
-import Snackbar from "../Home/AddGroup/SnackBar";
-import GroupInput from "../Home/ListGroups/GroupInput";
 
 const Register = ({ navigation }) => {
   const [username, setUsername] = useState("");
