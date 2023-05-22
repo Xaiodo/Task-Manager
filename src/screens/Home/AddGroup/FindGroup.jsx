@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 import CustomButton from "../../../components/CustomButton";
 import GroupInput from "../../../components/CustomTextInput";
 import Snackbar from "../../../components/SnackBar";
+import { HomeContext } from "../../../navigation/AppStack/AppStackNavigation";
 import groupService from "../../../services/groupService";
 
 const FindGroup = () => {
@@ -11,6 +12,7 @@ const FindGroup = () => {
   const [secretWord, setGroupCode] = useState("");
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarColor, setSnackbarColor] = useState("");
+  const { groups, setGroups } = useContext(HomeContext).groups;
 
   useEffect(() => {
     if (snackbarMessage.length !== 0) {
@@ -34,6 +36,7 @@ const FindGroup = () => {
         if (res.status === 200) {
           setSnackbarMessage("You have successfully joined the group");
           setSnackbarColor("green");
+          setGroups([...groups, res.data]);
         } else if (res.status === 404) {
           setSnackbarMessage("Group not found");
           setSnackbarColor("red");

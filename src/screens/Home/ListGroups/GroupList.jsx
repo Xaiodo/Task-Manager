@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { StyleSheet, FlatList, View } from "react-native";
 
 import AddGroupButton from "../../../components/CustomPositionedButton";
 import GroupInput from "../../../components/CustomTextInput";
 import AddGroup from "../../../components/ModalBottomSheet";
+import { HomeContext } from "../../../navigation/AppStack/AppStackNavigation";
 import groupService from "../../../services/groupService";
 
 import GroupItem from "./GroupItem";
 
 const GroupList = ({ navigation }) => {
   const [searchGroup, setSearchGroup] = useState("");
-  const [groups, setGroups] = useState([]);
+  const { groups, setGroups } = useContext(HomeContext).groups;
   const [filteredGroups, setFilteredGroups] = useState([]);
 
   useEffect(() => {

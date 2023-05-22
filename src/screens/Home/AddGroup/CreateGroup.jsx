@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 import CustomButton from "../../../components/CustomButton";
 import GroupInput from "../../../components/CustomTextInput";
 import Snackbar from "../../../components/SnackBar";
+import isValidImageUrl from "../../../constants/images";
+import { HomeContext } from "../../../navigation/AppStack/AppStackNavigation";
 import groupService from "../../../services/groupService";
 
 const CreateGroup = () => {
@@ -12,6 +14,7 @@ const CreateGroup = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarColor, setSnackbarColor] = useState("");
+  const { groups, setGroups } = useContext(HomeContext).groups;
 
   useEffect(() => {
     if (snackbarMessage.length !== 0) {
@@ -23,18 +26,19 @@ const CreateGroup = () => {
     }
   }, [snackbarMessage]);
 
-  const onSearchHandle = () => {
+  const onCreateHandle = () => {
     if (groupName === "" || secretWord === "" || imageUrl === "") {
       setSnackbarMessage("Please fill all fields");
       setSnackbarColor("red");
       return;
     }
     groupService
-      .createGroup(groupName, secretWord, imageUrl)
+      .createGroup(groupName, secretWord, isValidImageUrl(imageUrl))
       .then((res) => {
         if (res.status === 200) {
           setSnackbarMessage("You have successfully created the group");
           setSnackbarColor("green");
+          setGroups([...groups, res.data]);
         } else if (res.status === 409) {
           setSnackbarMessage("Group with this name is already exists");
           setSnackbarColor("orange");
@@ -90,7 +94,7 @@ const CreateGroup = () => {
       <View style={styles.buttonContainer}>
         <CustomButton
           backgroundColor={"#cd266e"}
-          onPress={onSearchHandle}
+          onPress={onCreateHandle}
           textColor={"white"}
           title="Create group"
         />

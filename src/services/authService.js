@@ -30,15 +30,11 @@ const login = async (email, password) => {
 
 const register = async (email, password, username, imageUrl) => {
   try {
-    const response = await ApiManager.post(api.register, {
+    const response = await ApiManager.post(api.users.register, {
       email,
       password,
       username,
       imageUrl,
-      headers: {
-        Accept: "application/json",
-        "content-type": "application/json",
-      },
     });
 
     const { token, user } = response.data;

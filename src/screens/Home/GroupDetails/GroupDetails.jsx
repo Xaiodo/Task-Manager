@@ -61,7 +61,7 @@ const GroupDetails = ({ navigation, route }) => {
       <View style={{ height: 20 }} />
       {filteredTasks.length === 0 ? (
         <View style={{ alignItems: "center" }}>
-          <Text>No tasks</Text>
+          <Text style={{ color: "white" }}>No tasks</Text>
         </View>
       ) : (
         <View>

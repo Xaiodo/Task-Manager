@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../../components/CustomButton";
 import GroupInput from "../../components/CustomTextInput";
 import Snackbar from "../../components/SnackBar";
+import isValidImageUrl from "../../constants/images";
 import { AuthContext } from "../../navigation/AppNavigation/AppNavigation";
 import authService from "../../services/authService";
 
@@ -63,13 +64,9 @@ const Register = ({ navigation }) => {
       setSnackbarMessage("Image cannot be empty");
     }
     authService
-      .register(username, email, password, image)
-      .then((res) => {
-        if (res.error) {
-          setSnackbarMessage(res.error);
-        } else {
-          setIsLogged(res.token.length > 0);
-        }
+      .register(username, email, password, isValidImageUrl(image))
+      .then(() => {
+        setIsLogged(true);
       })
       .catch((err) => {
         setSnackbarMessage(err.message);

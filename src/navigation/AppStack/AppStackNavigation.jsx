@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 import { TouchableOpacity } from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
@@ -10,6 +10,7 @@ import GroupDetails from "../../screens/Home/GroupDetails/GroupDetails";
 import AddTask from "../../screens/Home/GroupDetails/Task/AddTask";
 import EditTask from "../../screens/Home/GroupDetails/Task/EditTask";
 import GroupList from "../../screens/Home/ListGroups/GroupList";
+import { AuthContext } from "../AppNavigation/AppNavigation";
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,11 @@ export const HomeContext = createContext();
 const AppStackNavigation = () => {
   const [tasks, setTasks] = useState([]);
   const [groups, setGroups] = useState([]);
+  const { setIsLogged } = useContext(AuthContext);
+
+  const handleOnLogout = () => {
+    setIsLogged(false);
+  };
 
   return (
     <HomeContext.Provider
@@ -43,9 +49,8 @@ const AppStackNavigation = () => {
             headerRight: () => (
               <TouchableOpacity onPress={() => {}}>
                 <HeaderIconButton
-                  color="white"
                   iconName="exit-outline"
-                  size={24}
+                  onPress={handleOnLogout}
                 />
               </TouchableOpacity>
             ),
